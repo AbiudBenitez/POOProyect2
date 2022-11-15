@@ -1,8 +1,6 @@
 package com.project;
 
-import javax.swing.JOptionPane;
-
-import com.project.model.ClienteCRUD;
+import com.project.view.ClienteGUI;
 
 /**
  * Hello world!
@@ -10,6 +8,9 @@ import com.project.model.ClienteCRUD;
  */
 public class App {
     public static void main(String[] args) {
-
+        ClienteGUI c = new ClienteGUI();
+        c.GUI();
+        c.setSize(400, 400);
+        c.setVisible(true);
     }
 }
