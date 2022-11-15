@@ -1,6 +1,7 @@
 package com.project;
 
-import com.project.view.ClienteGUI;
+import com.project.view.Clientes.Cliente;
+import com.project.view.Clientes.ClienteAddGUI;
 
 /**
  * Hello world!
@@ -8,9 +9,11 @@ import com.project.view.ClienteGUI;
  */
 public class App {
     public static void main(String[] args) {
-        ClienteGUI c = new ClienteGUI();
-        c.GUI();
-        c.setSize(400, 400);
-        c.setVisible(true);
+        ClienteAddGUI cli_add = new ClienteAddGUI();
+        Cliente cli_norm = new Cliente();
+        cli_norm.clientet();
+        cli_add.GUI();
+        cli_add.setSize(400, 400);
+        cli_add.setVisible(true);
     }
 }
