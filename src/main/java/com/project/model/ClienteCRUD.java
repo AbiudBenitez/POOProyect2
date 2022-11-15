@@ -10,6 +10,33 @@ public class ClienteCRUD {
   private PreparedStatement pst;
   private ResultSet rs;
 
+  public int countCliente(int cant) {
+    Connection connect = null;
+    int count = 0;
+    try {
+      connect = ConnectionPool.getInstance().getConnection();
+      if (connect == null) {
+        System.out.println("No conectado");
+        return 0;
+      }
+
+      String sql = "SELECT * FROM cliente";
+      pst = connect.prepareStatement(sql);
+      rs = pst.executeQuery();
+
+      int i = 0;
+      while (rs.next()) {
+        i++;
+      }
+      count = i;
+
+    } catch (Exception e) {
+      System.out.println(e);
+      return 0;
+    }
+    return count;
+  }
+
   public boolean addCliente(Cliente cliente) {
     boolean state = false;
     Connection connect = null;
