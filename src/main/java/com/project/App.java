@@ -12,6 +12,7 @@ public class App {
         ClienteAddGUI cli_add = new ClienteAddGUI();
         Cliente cli_norm = new Cliente();
         cli_norm.clientet();
+        cli_norm.setVisible(true);
         cli_add.GUI();
         cli_add.setSize(400, 400);
         cli_add.setVisible(true);
