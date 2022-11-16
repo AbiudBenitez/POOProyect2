@@ -78,8 +78,13 @@ public class ClienteCRUD {
       }
       String sql = "";
       switch (filter) {
-        case "nom_cli":
-          sql = "SELECT * FROM cliente WHERE nom_cli REGEXP ?";
+        case "id_cli":
+          sql = "SELECT * FROM cliente WHERE id_cli REGEXP ?";
+          pst = connect.prepareStatement(sql);
+          pst.setInt(1, Integer.parseInt(data.get(1)));
+          break;
+        case "dir_cli":
+          sql = "SELECT * FROM cliente WHERE dir_cli REGEXP ?";
           pst = connect.prepareStatement(sql);
           pst.setString(1, data.get(0));
           break;
@@ -101,7 +106,9 @@ public class ClienteCRUD {
       rs = pst.executeQuery();
       while (rs.next()) {
         cliente = new Cliente();
+        cliente.setid_cli(rs.getInt("id_cli"));
         cliente.setnom_cli(rs.getString("nom_cli"));
+        cliente.setdir_cli(rs.getString("dir_cli"));
         cliente.setemail_cli(rs.getString("email_cli"));
         cliente.settel_cli(rs.getString("tel_cli"));
         list.add(cliente);
