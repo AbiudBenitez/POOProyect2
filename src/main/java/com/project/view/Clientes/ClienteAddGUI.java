@@ -4,6 +4,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 
@@ -15,6 +17,7 @@ import javax.swing.JTextField;
 
 import com.project.model.Cliente;
 import com.project.model.ClienteCRUD;
+import com.project.model.ConnectionPool;
 
 public class ClienteAddGUI extends JFrame implements ActionListener {
 
@@ -143,6 +146,17 @@ public class ClienteAddGUI extends JFrame implements ActionListener {
 
       if (crud.addCliente(cliente)) {
         JOptionPane.showMessageDialog(null, "Registro agregado correctamente.", "Aviso Clientes", 1);
+      }
+
+      Connection connect = null;
+      try {
+        connect = ConnectionPool.getInstance().getConnection();
+      } catch (SQLException e1) {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
+      }
+      if (connect == null) {
+        System.out.println("No conectado");
       }
     }
   }
