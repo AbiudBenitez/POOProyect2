@@ -54,6 +54,7 @@ public class ClienteCRUD {
       pst.setString(4, cliente.getemail_cli());
       int res = pst.executeUpdate();
       state = res > 0;
+
     } catch (Exception e) {
       System.out.println(e.getMessage());
     } finally {

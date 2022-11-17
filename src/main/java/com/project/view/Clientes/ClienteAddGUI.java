@@ -1,37 +1,39 @@
 package com.project.view.Clientes;
 
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import com.project.controller.Tablas;
 import com.project.model.Cliente;
 import com.project.model.ClienteCRUD;
-import com.project.model.ConnectionPool;
 
 public class ClienteAddGUI extends JFrame implements ActionListener {
 
   JTextField txtnom_cli, txttel_cli, txtdir_cli, txtemail_cli;
-  JButton btnguardar;
+  JButton btnguardar, btnlimpiar, btncancelar, btncasa;
+  Tablas ct = new Tablas();
 
   public void GUI() {
 
+    Container frame = this.getContentPane();
     this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     this.setTitle("Clientes");
 
-    Container frame = this.getContentPane();
     frame.setLayout(new GridBagLayout());
-
+    JScrollPane scroll = new JScrollPane(ct.clientet());
     GridBagConstraints gdc = new GridBagConstraints();
 
     JLabel lbltitle_cli = new JLabel("Clientes");
@@ -45,6 +47,12 @@ public class ClienteAddGUI extends JFrame implements ActionListener {
     txtdir_cli = new JTextField(15);
     txtemail_cli = new JTextField(15);
     btnguardar = new JButton("Guardar");
+    btnlimpiar = new JButton("Limpiar");
+    btncancelar = new JButton("Cancelar");
+    btncasa = new JButton();
+
+    gdc.weightx = .5;
+    gdc.weighty = 0;
 
     gdc.gridx = 1;
     gdc.gridy = 0;
@@ -56,7 +64,7 @@ public class ClienteAddGUI extends JFrame implements ActionListener {
 
     gdc.gridx = 1;
     gdc.gridy = 1;
-    gdc.gridwidth = 2;
+    gdc.gridwidth = 1;
     gdc.gridheight = 1;
     gdc.insets = new Insets(10, 0, 0, 0);
     gdc.fill = GridBagConstraints.NONE;
@@ -64,7 +72,7 @@ public class ClienteAddGUI extends JFrame implements ActionListener {
 
     gdc.gridx = 1;
     gdc.gridy = 2;
-    gdc.gridwidth = 2;
+    gdc.gridwidth = 1;
     gdc.gridheight = 1;
     gdc.insets = new Insets(10, 0, 0, 0);
     gdc.fill = GridBagConstraints.NONE;
@@ -72,7 +80,7 @@ public class ClienteAddGUI extends JFrame implements ActionListener {
 
     gdc.gridx = 1;
     gdc.gridy = 3;
-    gdc.gridwidth = 2;
+    gdc.gridwidth = 1;
     gdc.gridheight = 1;
     gdc.insets = new Insets(10, 0, 0, 0);
     gdc.fill = GridBagConstraints.NONE;
@@ -80,7 +88,7 @@ public class ClienteAddGUI extends JFrame implements ActionListener {
 
     gdc.gridx = 1;
     gdc.gridy = 4;
-    gdc.gridwidth = 2;
+    gdc.gridwidth = 1;
     gdc.gridheight = 1;
     gdc.insets = new Insets(10, 0, 0, 0);
     gdc.fill = GridBagConstraints.NONE;
@@ -122,11 +130,53 @@ public class ClienteAddGUI extends JFrame implements ActionListener {
     gdc.gridy = 5;
     gdc.gridwidth = 1;
     gdc.gridheight = 1;
-    gdc.insets = new Insets(15, 0, 0, 0);
+    gdc.insets = new Insets(15, 5, 0, 5);
     gdc.fill = GridBagConstraints.NONE;
+    ImageIcon guardar = new ImageIcon("icon/guardar.png");
+    btnguardar.setIcon(new ImageIcon(
+        guardar.getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
     frame.add(btnguardar, gdc);
 
+    gdc.gridx = 2;
+    gdc.gridy = 5;
+    gdc.gridwidth = 1;
+    gdc.gridheight = 1;
+    gdc.insets = new Insets(15, 5, 0, 5);
+    gdc.fill = GridBagConstraints.NONE;
+    ImageIcon limpiar = new ImageIcon("icon/limpiar.png");
+    btnlimpiar.setIcon(new ImageIcon(
+        limpiar.getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
+    frame.add(btnlimpiar, gdc);
+
+    gdc.gridx = 3;
+    gdc.gridy = 5;
+    gdc.gridwidth = 1;
+    gdc.gridheight = 1;
+    gdc.insets = new Insets(15, 5, 0, 5);
+    gdc.fill = GridBagConstraints.NONE;
+    ImageIcon cancelar = new ImageIcon("icon/cancelar.png");
+    btncancelar.setIcon(new ImageIcon(
+        cancelar.getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
+    frame.add(btncancelar, gdc);
+
+    gdc.gridx = 1;
+    gdc.gridy = 17;
+    gdc.gridwidth = 0;
+    gdc.gridheight = 0;
+    gdc.fill = GridBagConstraints.NONE;
+    ImageIcon casa = new ImageIcon("icon/casa.png");
+    btncasa.setIcon(new ImageIcon(
+        casa.getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT)));
+    frame.add(btncasa, gdc);
+
+    gdc.gridx = 1;
+    gdc.gridy = 6;
+    gdc.gridwidth = 10;
+    gdc.gridheight = 10;
+    frame.add(scroll, gdc);
+
     btnguardar.addActionListener(this);
+    btnlimpiar.addActionListener(this);
   }
 
   @Override
@@ -146,18 +196,17 @@ public class ClienteAddGUI extends JFrame implements ActionListener {
 
       if (crud.addCliente(cliente)) {
         JOptionPane.showMessageDialog(null, "Registro agregado correctamente.", "Aviso Clientes", 1);
+        txtnom_cli.setText("");
+        txttel_cli.setText("");
+        txtdir_cli.setText("");
+        txtemail_cli.setText("");
+        ct.clienteta();
       }
-
-      Connection connect = null;
-      try {
-        connect = ConnectionPool.getInstance().getConnection();
-      } catch (SQLException e1) {
-        // TODO Auto-generated catch block
-        e1.printStackTrace();
-      }
-      if (connect == null) {
-        System.out.println("No conectado");
-      }
+    } else if (e.getSource() == btnlimpiar) {
+      txtnom_cli.setText("");
+      txttel_cli.setText("");
+      txtdir_cli.setText("");
+      txtemail_cli.setText("");
     }
   }
 }
