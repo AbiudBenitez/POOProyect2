@@ -1,21 +1,11 @@
 package com.project.view.Clientes;
 
-import java.awt.GridBagLayout;
-import java.awt.Image;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.Container;
-import java.awt.GridBagConstraints;
+import java.awt.*;
+import java.awt.event.*;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
+import javax.swing.*;
 
+import com.project.App;
 import com.project.controller.Tablas;
 import com.project.model.Cliente;
 import com.project.model.ClienteCRUD;
@@ -177,6 +167,8 @@ public class ClienteAddGUI extends JFrame implements ActionListener {
 
     btnguardar.addActionListener(this);
     btnlimpiar.addActionListener(this);
+    btncancelar.addActionListener(this);
+    btncasa.addActionListener(this);
   }
 
   @Override
@@ -201,12 +193,32 @@ public class ClienteAddGUI extends JFrame implements ActionListener {
         txtdir_cli.setText("");
         txtemail_cli.setText("");
         ct.clienteta();
+        Clientes cli = new Clientes();
+        cli.GUI();
+        cli.setVisible(true);
+        cli.setResizable(false);
+        cli.setSize(800, 650);
+        this.setVisible(false);
       }
     } else if (e.getSource() == btnlimpiar) {
       txtnom_cli.setText("");
       txttel_cli.setText("");
       txtdir_cli.setText("");
       txtemail_cli.setText("");
+    } else if (e.getSource() == btncancelar) {
+      Clientes cli = new Clientes();
+      cli.GUI();
+      cli.setVisible(true);
+      cli.setResizable(false);
+      cli.setSize(800, 650);
+      this.setVisible(false);
+    } else if (e.getSource() == btncasa) {
+      App app = new App();
+      app.GUI();
+      app.setResizable(false);
+      app.setSize(600, 750);
+      app.setVisible(true);
+      this.setVisible(false);
     }
   }
 }
